@@ -51,9 +51,6 @@ public class ManageCustomerFormController implements Initializable {
     private TableView<CustomerTM> tblCustomers;
 
 
-    public class cus{
-
-    }
 
     private void loadAllCustomers() {
 
