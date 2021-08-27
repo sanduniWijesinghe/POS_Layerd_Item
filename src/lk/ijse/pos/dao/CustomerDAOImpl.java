@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CustomerDAOImpl {
+
     public boolean addCustomer(Customer customer) throws Exception {
         Connection connection = DBConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer VALUES (?,?,?,?)");
@@ -38,8 +39,9 @@ public class CustomerDAOImpl {
 
     public Customer searchCustomer(String id) throws Exception {
         Connection connection = DBConnection.getInstance().getConnection();
-        Statement stm = connection.createStatement();
-        ResultSet rst = stm.executeQuery("SELECT * FROM Customer where id=?");
+        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer where id=?");
+        pstm.setObject(1, id);
+        ResultSet rst = pstm.executeQuery();
         if (rst.next()) {
             return new Customer(rst.getString("id"), rst.getString("name"), rst.getString("address"));
         }
@@ -59,5 +61,3 @@ public class CustomerDAOImpl {
     }
 
 }
-
-

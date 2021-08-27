@@ -107,7 +107,7 @@ public class MainFormController implements Initializable {
     }
 
 
-@FXML
+    @FXML
     private void navigate(MouseEvent event) throws IOException {
         if (event.getSource() instanceof ImageView){
             ImageView icon = (ImageView) event.getSource();
