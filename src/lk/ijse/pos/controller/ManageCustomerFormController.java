@@ -16,18 +16,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.AppInitializer;
-import lk.ijse.pos.dao.CustomerDAOImpl;
-import lk.ijse.pos.dao.impl.CustomerDAO;
-import lk.ijse.pos.db.DBConnection;
+import lk.ijse.pos.dao.custom.CustomerDAO;
+import lk.ijse.pos.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.pos.model.Customer;
 import lk.ijse.pos.view.tblmodel.CustomerTM;
 
-
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -53,28 +47,27 @@ public class ManageCustomerFormController implements Initializable {
     @FXML
     private TableView<CustomerTM> tblCustomers;
 
-    CustomerDAO dao=new CustomerDAOImpl();
+    /* Property Injection*/
+    private final CustomerDAO customerDAO = new CustomerDAOImpl();
+
 
     private void loadAllCustomers() {
-
         try {
+            /*  get all customers*/
 
-            //CustomerDAOImpl dao=new CustomerDAOImpl();
-            ArrayList<Customer>all=dao.getAllCustomer();
-            ArrayList<CustomerTM>allTable=new ArrayList<>();
-            for (Customer customer:all) {
-                allTable.add(new CustomerTM(customer.getcID(),customer.getName(),customer.getAddress()) );
+            ArrayList<Customer> allCustomers = this.customerDAO.getAll();
+            ArrayList<CustomerTM> allCustomersForTable = new ArrayList<>();
 
+            for (Customer customer : allCustomers) {
+                allCustomersForTable.add(new CustomerTM(customer.getcID(), customer.getName(), customer.getAddress()));
             }
-
-            ObservableList<CustomerTM> olCustomers =  FXCollections.observableArrayList(allTable);
-
+            ObservableList<CustomerTM> olCustomers = FXCollections.observableArrayList(allCustomersForTable);
             tblCustomers.setItems(olCustomers);
 
-        } catch (Exception ex) {
-            Logger.getLogger(ManageCustomerFormController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -127,10 +120,7 @@ public class ManageCustomerFormController implements Initializable {
 
             try {
                 /*Delete operation*/
-                //CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-                boolean b = dao.deleteCustomer(customerID);
-
-
+                boolean b = customerDAO.delete(customerID);
 
                 if (b) {
                     loadAllCustomers();
@@ -156,7 +146,6 @@ public class ManageCustomerFormController implements Initializable {
     private void btnAddNewCustomer_OnAction(ActionEvent event) {
         txtCustomerId.requestFocus();
         tblCustomers.getSelectionModel().clearSelection();
-
         addnew = true;
     }
 
@@ -164,13 +153,9 @@ public class ManageCustomerFormController implements Initializable {
     private void btnSave_OnAction(ActionEvent event) {
 
         if (addnew) {
-
             try {
-                //CustomerDAOImpl dao=new CustomerDAOImpl();
-                boolean b=dao.addCustomer(new Customer(txtCustomerId.getText(),txtCustomerName.getText(),txtCustomerAddress.getText()));
-
-
-
+                /* Add Operation*/
+                boolean b = customerDAO.add(new Customer(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
                 if (b) {
                     loadAllCustomers();
                 } else {
@@ -182,11 +167,8 @@ public class ManageCustomerFormController implements Initializable {
 
         } else {
             try {
-                //Update
-                //CustomerDAOImpl dao=new CustomerDAOImpl();
-                boolean b=dao.addCustomer(new Customer(txtCustomerId.getText(),txtCustomerName.getText(),txtCustomerAddress.getText()));
-
-
+                //Update Operation
+                boolean b = customerDAO.update(new Customer(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
                 if (b) {
                     loadAllCustomers();
                 } else {
