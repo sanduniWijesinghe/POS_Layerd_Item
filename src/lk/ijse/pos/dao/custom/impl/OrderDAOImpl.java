@@ -1,8 +1,8 @@
 package lk.ijse.pos.dao.custom.impl;
 
-import lk.ijse.pos.dao.CrudUtil;
-import lk.ijse.pos.dao.custom.OrderDetailsDAO;
-import lk.ijse.pos.model.OrderDetails;
+import lk.ijse.pos.dao.custom.CrudUtil;
+import lk.ijse.pos.dao.custom.OrderDAO;
+import lk.ijse.pos.model.Orders;
 
 import java.util.ArrayList;
 
@@ -10,15 +10,16 @@ import java.util.ArrayList;
  * @author : Sanu Vithanage
  * @since : 0.1.0
  **/
-public class OrderDetailsDAOImpl implements OrderDetailsDAO {
+
+public class OrderDAOImpl implements OrderDAO {
 
     @Override
-    public boolean add(OrderDetails oDetails) throws Exception {
-        return CrudUtil.executeUpdate("INSERT INTO OrderDetails VALUES (?,?,?,?)", oDetails.getOrderId(), oDetails.getItemCode(), oDetails.getQty(), oDetails.getUnitPrice());
+    public boolean add(Orders orders) throws Exception {
+        return CrudUtil.executeUpdate("INSERT INTO Orders VALUES (?,?,?)", orders.getId(), orders.getDate(), orders.getCustomerId());
     }
 
     @Override
-    public boolean update(OrderDetails entity) throws Exception {
+    public boolean update(Orders entity) throws Exception {
         throw new UnsupportedOperationException("This feature is not supported yet");
     }
 
@@ -28,12 +29,13 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO {
     }
 
     @Override
-    public OrderDetails search(String s) throws Exception {
+    public Orders search(String s) throws Exception {
         throw new UnsupportedOperationException("This feature is not supported yet");
     }
 
     @Override
-    public ArrayList<OrderDetails> getAll() throws Exception {
+    public ArrayList<Orders> getAll() throws Exception {
         throw new UnsupportedOperationException("This feature is not supported yet");
     }
+
 }

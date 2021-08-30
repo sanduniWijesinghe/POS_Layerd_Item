@@ -27,6 +27,7 @@ import lk.ijse.pos.dao.custom.OrderDetailsDAO;
 import lk.ijse.pos.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.pos.dao.custom.impl.OrderDAOImpl;
 import lk.ijse.pos.dao.custom.impl.OrderDetailsDAOImpl;
+import lk.ijse.pos.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.Customer;
 import lk.ijse.pos.model.Item;
@@ -57,7 +58,7 @@ import java.util.logging.Logger;
 public class OrderFormController implements Initializable {
 
     private final CustomerDAO customerDAO = new CustomerDAOImpl();
-    private final ItemDAO itemDAO = new lk.ijse.pos.dao.custom.impl.ItemDAOImpl();
+    private final ItemDAO itemDAO = new ItemDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
     private final OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAOImpl();
     @FXML

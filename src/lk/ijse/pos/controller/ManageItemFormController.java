@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.AppInitializer;
 import lk.ijse.pos.dao.custom.ItemDAO;
+import lk.ijse.pos.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.pos.model.Item;
 import lk.ijse.pos.view.tblmodel.ItemTM;
 
@@ -34,7 +35,7 @@ import java.util.logging.Logger;
 
 public class ManageItemFormController implements Initializable {
 
-    private ItemDAO itemDAO = new lk.ijse.pos.dao.custom.impl.ItemDAOImpl();
+    private ItemDAO itemDAO = new ItemDAOImpl();
     @FXML
     private JFXTextField txtItemCode;
     @FXML
