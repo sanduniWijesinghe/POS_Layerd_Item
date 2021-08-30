@@ -1,6 +1,5 @@
-package lk.ijse.pos.dao;
+package lk.ijse.pos.dao.impl;
 
-import lk.ijse.pos.dao.impl.OrderDAO;
 import lk.ijse.pos.db.DBConnection;
 import lk.ijse.pos.model.Orders;
 
@@ -8,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-public class OrderDAOImpl implements OrderDAO{
+class OrderDAOImpl implements OrderDAO{
 
     @Override
     public boolean addOrder(Orders orders) throws Exception {

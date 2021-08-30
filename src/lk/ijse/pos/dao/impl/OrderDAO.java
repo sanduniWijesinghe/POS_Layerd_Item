@@ -2,7 +2,13 @@ package lk.ijse.pos.dao.impl;
 
 import lk.ijse.pos.model.Orders;
 
+import java.util.ArrayList;
+
 public interface OrderDAO {
-    public boolean addOrder(Orders orders) throws Exception;
+    boolean addOrder(Orders orders) throws Exception;
+    boolean deleteOrder();
+    boolean updateOrder();
+    Orders searchOrder();
+    ArrayList<Orders> getAllOrders();
 }
 
