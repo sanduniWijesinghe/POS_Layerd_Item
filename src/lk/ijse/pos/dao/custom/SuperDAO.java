@@ -1,4 +1,4 @@
-package lk.ijse.pos.dao.custom;
+package lk.ijse.pos.dao;
 
 import lk.ijse.pos.model.Customer;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @since : 0.1.0
  **/
 public interface SuperDAO<T,ID> {
-    static boolean add(T entity) throws Exception;
+    boolean add(T entity) throws Exception;
 
     boolean update(T entity) throws Exception;
 
