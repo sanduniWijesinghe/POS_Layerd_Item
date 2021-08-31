@@ -16,10 +16,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.AppInitializer;
+import lk.ijse.pos.bo.CustomerBOImpl;
 import lk.ijse.pos.dao.custom.CustomerDAO;
-import lk.ijse.pos.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.pos.dao.impl.CustomerDAOImpl;
 import lk.ijse.pos.model.Customer;
 import lk.ijse.pos.view.tblmodel.CustomerTM;
+
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,27 +49,30 @@ public class ManageCustomerFormController implements Initializable {
     @FXML
     private TableView<CustomerTM> tblCustomers;
 
-    /* Property Injection*/
-    private final CustomerDAO customerDAO = new CustomerDAOImpl();
-
+    //CustomerDAO dao=new CustomerDAOImpl();
+    CustomerBOImpl customerBO=new CustomerBOImpl();
 
     private void loadAllCustomers() {
+
         try {
-            /*  get all customers*/
 
-            ArrayList<Customer> allCustomers = this.customerDAO.getAll();
-            ArrayList<CustomerTM> allCustomersForTable = new ArrayList<>();
 
-            for (Customer customer : allCustomers) {
-                allCustomersForTable.add(new CustomerTM(customer.getcID(), customer.getName(), customer.getAddress()));
+            //CustomerDAOImpl dao=new CustomerDAOImpl();
+            ArrayList<Customer>all=customerBO.getAllCustomer();
+            ArrayList<CustomerTM>allTable=new ArrayList<>();
+            for (Customer customer:all) {
+                allTable.add(new CustomerTM(customer.getcID(),customer.getName(),customer.getAddress()) );
+
             }
-            ObservableList<CustomerTM> olCustomers = FXCollections.observableArrayList(allCustomersForTable);
+
+            ObservableList<CustomerTM> olCustomers =  FXCollections.observableArrayList(allTable);
+
             tblCustomers.setItems(olCustomers);
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(ManageCustomerFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
@@ -120,7 +125,10 @@ public class ManageCustomerFormController implements Initializable {
 
             try {
                 /*Delete operation*/
-                boolean b = customerDAO.delete(customerID);
+                //CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+                boolean b = customerBO.deleteCustomer(customerID);
+
+
 
                 if (b) {
                     loadAllCustomers();
@@ -146,6 +154,7 @@ public class ManageCustomerFormController implements Initializable {
     private void btnAddNewCustomer_OnAction(ActionEvent event) {
         txtCustomerId.requestFocus();
         tblCustomers.getSelectionModel().clearSelection();
+
         addnew = true;
     }
 
@@ -153,9 +162,13 @@ public class ManageCustomerFormController implements Initializable {
     private void btnSave_OnAction(ActionEvent event) {
 
         if (addnew) {
+
             try {
-                /* Add Operation*/
-                boolean b = customerDAO.add(new Customer(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
+                //CustomerDAOImpl dao=new CustomerDAOImpl();
+                boolean b=customerBO.addCustomer(new Customer(txtCustomerId.getText(),txtCustomerName.getText(),txtCustomerAddress.getText()));
+
+
+
                 if (b) {
                     loadAllCustomers();
                 } else {
@@ -167,8 +180,11 @@ public class ManageCustomerFormController implements Initializable {
 
         } else {
             try {
-                //Update Operation
-                boolean b = customerDAO.update(new Customer(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
+                //Update
+                //CustomerDAOImpl dao=new CustomerDAOImpl();
+                boolean b=customerBO.updateCustomer(new Customer(txtCustomerId.getText(),txtCustomerName.getText(),txtCustomerAddress.getText()));
+
+
                 if (b) {
                     loadAllCustomers();
                 } else {

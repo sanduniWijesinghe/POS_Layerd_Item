@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @since : 0.1.0
  **/
 public interface SuperDAO<T,ID> {
-    boolean add(T entity) throws Exception;
+    static boolean add(T entity) throws Exception;
 
     boolean update(T entity) throws Exception;
 
