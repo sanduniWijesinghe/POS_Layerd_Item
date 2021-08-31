@@ -1,6 +1,8 @@
 package lk.ijse.pos.bo.custom;
 
-import lk.ijse.pos.model.Item;
+import lk.ijse.pos.bo.SuperBO;
+import lk.ijse.pos.dto.ItemDTO;
+import lk.ijse.pos.entity.Item;
 
 import java.util.ArrayList;
 
@@ -8,16 +10,16 @@ import java.util.ArrayList;
  * @author : Sanu Vithanage
  * @since : 0.1.0
  **/
-public interface ItemBO {
-    boolean addItem(Item item) throws Exception;
+public interface ItemBO extends SuperBO {
+    boolean addItem(ItemDTO item) throws Exception;
 
     boolean deleteItem(String code) throws Exception;
 
-    boolean updateItem(Item item) throws Exception;
+    boolean updateItem(ItemDTO item) throws Exception;
 
-    Item searchItem(String code) throws Exception;
+    ItemDTO searchItem(String code) throws Exception;
 
-    ArrayList<Item> getAllItems() throws Exception;
+    ArrayList<ItemDTO> getAllItems() throws Exception;
 
     boolean updateItemQtyOnHand(String code, int qtyOnHand)throws Exception;
 }

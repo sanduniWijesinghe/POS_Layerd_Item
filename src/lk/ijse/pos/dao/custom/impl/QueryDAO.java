@@ -1,4 +1,11 @@
-package lk.ijse.pos.dao.custom.impl;
+package lk.ijse.pos.dao.custom;
 
-public interface QueryDAO {
+import lk.ijse.pos.dao.SuperDAO;
+
+/**
+ * @author : Sanu Vithanage
+ * @since : 0.1.0
+ **/
+public interface QueryDAO extends SuperDAO {
+
 }

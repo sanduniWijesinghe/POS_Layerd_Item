@@ -1,23 +1,21 @@
-package lk.ijse.pos.model;
+package lk.ijse.pos.dto;
 
 import java.math.BigDecimal;
-
 
 /**
  * @author : Sanu Vithanage
  * @since : 0.1.0
  **/
-
-public class OrderDetails {
+public class OrderDetailsDTO {
     private String orderId;
     private String itemCode;
     private int qty;
     private BigDecimal unitPrice;
 
-    public OrderDetails() {
+    public OrderDetailsDTO() {
     }
 
-    public OrderDetails(String orderId, String itemCode, int qty, BigDecimal unitPrice) {
+    public OrderDetailsDTO(String orderId, String itemCode, int qty, BigDecimal unitPrice) {
         this.orderId = orderId;
         this.itemCode = itemCode;
         this.qty = qty;
@@ -58,7 +56,7 @@ public class OrderDetails {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("OrderDetails{");
+        final StringBuffer sb = new StringBuffer("OrderDetailsDTO{");
         sb.append("orderId='").append(orderId).append('\'');
         sb.append(", itemCode='").append(itemCode).append('\'');
         sb.append(", qty=").append(qty);

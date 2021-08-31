@@ -16,10 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.AppInitializer;
-import lk.ijse.pos.bo.CustomerBOImpl;
-import lk.ijse.pos.bo.custom.CustomerBO;
 
-import lk.ijse.pos.model.Customer;
+import lk.ijse.pos.bo.custom.CustomerBO;
+import lk.ijse.pos.bo.impl.BOFactory;
+import lk.ijse.pos.dto.CustomerDTO;
+import lk.ijse.pos.entity.Customer;
 import lk.ijse.pos.view.tblmodel.CustomerTM;
 
 import java.net.URL;
@@ -49,17 +50,18 @@ public class ManageCustomerFormController implements Initializable {
     @FXML
     private TableView<CustomerTM> tblCustomers;
 
-    private final CustomerBO customerBO = new CustomerBOImpl();
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
 
     private void loadAllCustomers() {
+
         try {
             /*  get all customers*/
 
-            ArrayList<Customer> allCustomers = this.customerBO.getAllCustomers();
+            ArrayList<CustomerDTO> allCustomers = this.customerBO.getAllCustomers();
             ArrayList<CustomerTM> allCustomersForTable = new ArrayList<>();
 
-            for (Customer customer : allCustomers) {
-                allCustomersForTable.add(new CustomerTM(customer.getcID(), customer.getName(), customer.getAddress()));
+            for (CustomerDTO customer : allCustomers) {
+                allCustomersForTable.add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
             }
             ObservableList<CustomerTM> olCustomers = FXCollections.observableArrayList(allCustomersForTable);
             tblCustomers.setItems(olCustomers);
@@ -155,7 +157,7 @@ public class ManageCustomerFormController implements Initializable {
         if (addnew) {
             try {
                 /* Add Operation*/
-                boolean b = customerBO.addCustomer(new Customer(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
+                boolean b = customerBO.addCustomer(new CustomerDTO(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
                 if (b) {
                     loadAllCustomers();
                 } else {
@@ -168,7 +170,7 @@ public class ManageCustomerFormController implements Initializable {
         } else {
             try {
                 //Update Operation
-                boolean b = customerBO.updateCustomer(new Customer(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
+                boolean b = customerBO.updateCustomer(new CustomerDTO(txtCustomerId.getText(), txtCustomerName.getText(), txtCustomerAddress.getText()));
                 if (b) {
                     loadAllCustomers();
                 } else {

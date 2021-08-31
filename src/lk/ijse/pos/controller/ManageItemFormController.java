@@ -16,9 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.AppInitializer;
+
 import lk.ijse.pos.bo.custom.ItemBO;
-import lk.ijse.pos.bo.custom.impl.ItemBOImpl;
-import lk.ijse.pos.model.Item;
+import lk.ijse.pos.bo.impl.BOFactory;
+import lk.ijse.pos.dto.ItemDTO;
+import lk.ijse.pos.entity.Item;
 import lk.ijse.pos.view.tblmodel.ItemTM;
 
 import java.math.BigDecimal;
@@ -36,7 +38,7 @@ import java.util.logging.Logger;
 public class ManageItemFormController implements Initializable {
 
 
-    private final ItemBO itemBO = new ItemBOImpl();
+
     @FXML
     private JFXTextField txtItemCode;
     @FXML
@@ -51,14 +53,16 @@ public class ManageItemFormController implements Initializable {
     private TableView<ItemTM> tblItems;
     private boolean addNew = true;
 
+    private ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
+
     private void loadAllItems() {
 
         try {
             /*Get All Items*/
-            ArrayList<Item> allItems = itemBO.getAllItems();
+            ArrayList<ItemDTO> allItems = itemBO.getAllItems();
             /*create a ItemTM type list*/
             ArrayList<ItemTM> allItemsForTable = new ArrayList<>();
-            for (Item i : allItems) {
+            for (ItemDTO i : allItems) {
                 allItemsForTable.add(new ItemTM(i.getCode(), i.getDescription(), i.getUnitPrice(), i.getQtyOnHand()));
             }
             ObservableList<ItemTM> olItems = FXCollections.observableArrayList(allItemsForTable);
@@ -127,7 +131,7 @@ public class ManageItemFormController implements Initializable {
         if (addNew) {
             try {
                 /*Add Item*/
-                Item item = new Item(txtItemCode.getText(), txtDescription.getText(), new BigDecimal(txtUnitPrice.getText()), Integer.parseInt(txtQty.getText()));
+                ItemDTO item = new ItemDTO(txtItemCode.getText(), txtDescription.getText(), new BigDecimal(txtUnitPrice.getText()), Integer.parseInt(txtQty.getText()));
                 boolean b = itemBO.addItem(item);
                 if (b) {
                     loadAllItems();
@@ -141,7 +145,7 @@ public class ManageItemFormController implements Initializable {
         } else {
             try {
                 /*Update Item*/
-                Item item = new Item(txtItemCode.getText(), txtDescription.getText(), new BigDecimal(txtUnitPrice.getText()), Integer.parseInt(txtQty.getText()));
+                ItemDTO item = new ItemDTO(txtItemCode.getText(), txtDescription.getText(), new BigDecimal(txtUnitPrice.getText()), Integer.parseInt(txtQty.getText()));
                 boolean b = itemBO.updateItem(item);
                 if (b) {
                     loadAllItems();

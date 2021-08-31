@@ -1,8 +1,8 @@
 package lk.ijse.pos.dao.custom.impl;
 
-import lk.ijse.pos.dao.custom.CrudUtil;
+import lk.ijse.pos.dao.CrudUtil;
 import lk.ijse.pos.dao.custom.OrderDAO;
-import lk.ijse.pos.model.Orders;
+import lk.ijse.pos.entity.Orders;
 
 import java.util.ArrayList;
 

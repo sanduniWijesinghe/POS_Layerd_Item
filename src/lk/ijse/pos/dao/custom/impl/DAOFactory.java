@@ -1,6 +1,5 @@
-package lk.ijse.pos.dao.custom.impl;
+package lk.ijse.pos.dao;
 
-import lk.ijse.pos.dao.SuperDAO;
 import lk.ijse.pos.dao.custom.impl.*;
 
 /**
@@ -31,7 +30,7 @@ public class DAOFactory {
             case ORDERDETAILS:
                 return new OrderDetailsDAOImpl();
             case QUERY:
-                return (SuperDAO) new QueryDAOImpl();
+                return new QueryDAOImpl();
             default:
                 return null;
         }
