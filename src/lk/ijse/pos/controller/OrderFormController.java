@@ -21,8 +21,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import lk.ijse.pos.bo.CustomerBOImpl;
-import lk.ijse.pos.bo.ItemBOImpl;
 import lk.ijse.pos.bo.PurchaseOrderBOImpl;
+import lk.ijse.pos.bo.custom.CustomerBO;
+import lk.ijse.pos.bo.custom.ItemBO;
+import lk.ijse.pos.bo.custom.PurchaseOrderBO;
+
+import lk.ijse.pos.bo.custom.impl.ItemBOImpl;
+
 import lk.ijse.pos.model.Customer;
 import lk.ijse.pos.model.Item;
 import lk.ijse.pos.model.OrderDetails;
@@ -51,7 +56,7 @@ import java.util.logging.Logger;
 public class OrderFormController implements Initializable {
 
 
-    private final PurchaseOrderBOImpl purchaseOrderBO = new PurchaseOrderBOImpl();
+
     @FXML
     private JFXComboBox<String> cmbCustomerID;
     @FXML
@@ -67,8 +72,11 @@ public class OrderFormController implements Initializable {
     @FXML
     private JFXTextField txtQty;
     @FXML
+
     private TableView<OrderDetailTM> tblOrderDetails;
     private ObservableList<OrderDetailTM> olOrderDetails;
+    private PurchaseOrderBO purchaseOrderBO = new PurchaseOrderBOImpl();
+
     private boolean update = false;
     @FXML
     private JFXButton btnRemove;
@@ -79,8 +87,8 @@ public class OrderFormController implements Initializable {
     @FXML
     private JFXDatePicker txtOrderDate;
 
-    CustomerBOImpl customerBO = new CustomerBOImpl();
-    ItemBOImpl itemBO = new ItemBOImpl();
+    private CustomerBO customerBO = new CustomerBOImpl();
+    private ItemBO itemBO = new ItemBOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -323,7 +331,8 @@ public class OrderFormController implements Initializable {
                 alert.show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage(), ButtonType.OK);
+            alert.show();
         }
 
 

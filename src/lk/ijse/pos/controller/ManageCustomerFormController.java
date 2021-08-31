@@ -17,6 +17,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.pos.AppInitializer;
 import lk.ijse.pos.bo.CustomerBOImpl;
+import lk.ijse.pos.bo.custom.CustomerBO;
+
 import lk.ijse.pos.model.Customer;
 import lk.ijse.pos.view.tblmodel.CustomerTM;
 
@@ -35,7 +37,7 @@ import java.util.logging.Logger;
 public class ManageCustomerFormController implements Initializable {
 
     boolean addnew = true;
-    CustomerBOImpl customerBO = new CustomerBOImpl();
+
     @FXML
     private AnchorPane root;
     @FXML
@@ -46,6 +48,8 @@ public class ManageCustomerFormController implements Initializable {
     private JFXTextField txtCustomerAddress;
     @FXML
     private TableView<CustomerTM> tblCustomers;
+
+    private final CustomerBO customerBO = new CustomerBOImpl();
 
     private void loadAllCustomers() {
         try {
